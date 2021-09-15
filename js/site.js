@@ -1,11 +1,11 @@
 
-
 function calcMonthlyPayments() {
-    let loanAmount = document.getElementById("loanAmount");
-    let term = document.getElementById("term");
-    let interestRate = document.getElementById("interestRate");
+    let loanAmount = document.getElementById("loanAmount").value;
+    let term = document.getElementById("term").value;
+    let interestRate = document.getElementById("interestRate").value;
 
     let monthlyPayments = document.getElementById("monthlyPayments");
+    let total = (loanAmount) * (interestRate/1200) / (1 - (1 + interestRate/1200)**(-60));
 
-    monthlyPayments = (loanAmount) * (interestRate/1200) / (1-(1 + interestRate/1200)^(-term));
+    monthlyPayments.innerHTML = `$${total.toFixed(2)}`;
 }
