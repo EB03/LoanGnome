@@ -1,40 +1,40 @@
 
-function calcMonthlyPayments() {
-    let loanAmount = document.getElementById("loanAmount").value;
-    let term = document.getElementById("term").value;
-    let interestRate = document.getElementById("interestRate").value;
-    let results = document.getElementById("results");
+function getUserInput() {
+    let a = {}
+    a.loanAmount = document.getElementById("loanAmount").value;
+    a.term = document.getElementById("term").value;
+    a.interestRate = document.getElementById("interestRate").value;
+    a.results = document.getElementById("results");
+    a.payments = document.getElementById("monthlyPayments");
 
+    calcMonthlyPayments(a);
+    displayPayments(a);
+}
 
-
-    // Monthly Payments
-    let payments = document.getElementById("monthlyPayments");
-    let totalMonthly = (loanAmount) * (interestRate/1200) / (1 - (1 + interestRate/1200)**(-60));
-
-    payments.innerHTML = `$${totalMonthly.toFixed(2)}`;
-
+function calcMonthlyPayments(a) {
     let month = 0;
     let principal;
     let interest;
     let totalInterest = 0;
-    let balance = loanAmount;
+    let balance = a.loanAmount;
 
-    let templateRows = "";
+    a.templateRows = "";
 
-    for (let i = 0; i < term; i++) {
+    a.totalMonthly = (a.loanAmount) * (a.interestRate/1200) / (1 - (1 + a.interestRate/1200)**(-60));
+
+    for (let i = 0; i < a.term; i++) {
         month++;
-        interest = balance * interestRate/1200;
-        principal = totalMonthly - interest;
+        interest = balance * a.interestRate/1200;
+        principal = a.totalMonthly - interest;
         totalInterest = totalInterest + interest;
         balance = balance - principal;
-        templateRows += `<tr><td>${month}</td><td>$${totalMonthly.toFixed(2)}</td><td>${principal.toFixed(2)}</td><td>${interest.toFixed(2)}</td><td>${totalInterest.toFixed(2)}</td><td>${balance.toFixed(2)}</td></tr>`;
+        a.templateRows += `<tr><td>${month}</td><td>$${a.totalMonthly.toFixed(2)}</td><td>${principal.toFixed(2)}</td><td>${interest.toFixed(2)}</td><td>${totalInterest.toFixed(2)}</td><td>${balance.toFixed(2)}</td></tr>`;
     }
 
-    results.innerHTML = templateRows;
+    return a;
 }
 
-// Total Monthly Payment = (amount loaned) * (rate/1200) / (1 – (1 + rate/1200)(-Number of Months) )
-// Remaining Balance before the very first month equals the amount of the loan.
-// Interest Payment = Previous Remaining Balance * rate/1200
-// Principal Payment = Total Monthly Payment - Interest Payment
-// At end each month, Remaining Balance = Previous Remaining Balance - principal payments
+function displayPayments(a) {
+    a.payments.innerHTML = `$${a.totalMonthly.toFixed(2)}`;
+    a.results.innerHTML = a.templateRows;
+}
