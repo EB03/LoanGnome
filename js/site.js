@@ -1,40 +1,56 @@
 
 function getUserInput() {
-    let a = {}
-    a.loanAmount = document.getElementById("loanAmount").value;
-    a.term = document.getElementById("term").value;
-    a.interestRate = document.getElementById("interestRate").value;
-    a.results = document.getElementById("results");
-    a.payments = document.getElementById("monthlyPayments");
+    let loan = {}
+    loan.loanAmount = document.getElementById("loanAmount").value;
+    loan.term = document.getElementById("term").value;
+    loan.interestRate = document.getElementById("interestRate").value;
+    loan.results = document.getElementById("results");
+    loan.payments = document.getElementById("monthlyPayments");
+    loan.totalPrincipal = document.getElementById("totalPrincipal");
+    loan.totalInterest = document.getElementById("totalInterest");
+    loan.totalCost = document.getElementById("totalCost");
 
-    calcMonthlyPayments(a);
-    displayPayments(a);
+    calcMonthlyPayments(loan);
+    displayPayments(loan);
 }
 
-function calcMonthlyPayments(a) {
+function calcMonthlyPayments(loan) {
     let month = 0;
     let principal;
     let interest;
     let totalInterest = 0;
-    let balance = a.loanAmount;
+    let balance = loan.loanAmount;
+    loan.regex = /\B(?=(\d{3})+(?!\d))/g;
 
-    a.templateRows = "";
+    loan.templateRows = "";
 
-    a.totalMonthly = (a.loanAmount) * (a.interestRate/1200) / (1 - (1 + a.interestRate/1200)**(-60));
+    loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-60));
 
-    for (let i = 0; i < a.term; i++) {
+    for (let i = 0; i < loan.term; i++) {
         month++;
-        interest = balance * a.interestRate/1200;
-        principal = a.totalMonthly - interest;
+        interest = balance * loan.interestRate/1200;
+        principal = loan.totalMonthly - interest;
         totalInterest = totalInterest + interest;
         balance = balance - principal;
-        a.templateRows += `<tr><td>${month}</td><td>$${a.totalMonthly.toFixed(2)}</td><td>${principal.toFixed(2)}</td><td>${interest.toFixed(2)}</td><td>${totalInterest.toFixed(2)}</td><td>${balance.toFixed(2)}</td></tr>`;
+        
+        if (balance < 0.00) {
+            balance = 0.00;
+        }
+        loan.templateRows += `<tr><td>${month}</td><td>$${loan.totalMonthly.toFixed(2).replace(loan.regex, ",")}</td><td>$${principal.toFixed(2).replace(loan.regex, ",")}</td><td>$${interest.toFixed(2).replace(loan.regex, ",")}</td><td>$${totalInterest.toFixed(2).replace(loan.regex, ",")}</td><td>$${balance.toFixed(2).replace(loan.regex, ",")}</td></tr>`;
     }
-
-    return a;
+    loan.principal = principal;
+    loan.allInterest = totalInterest;
+    return loan;
 }
 
-function displayPayments(a) {
-    a.payments.innerHTML = `$${a.totalMonthly.toFixed(2)}`;
-    a.results.innerHTML = a.templateRows;
+function displayPayments(loan) {
+    loan.loanAmount = parseFloat(loan.loanAmount);
+
+    loan.totalPrincipal.innerHTML = `$${loan.loanAmount.toFixed(2).replace(loan.regex, ",")}`;
+    loan.totalInterest.innerHTML = `$${loan.allInterest.toFixed(2).replace(loan.regex, ",")}`;
+    let totalCost = loan.loanAmount + loan.allInterest;
+    loan.totalCost.innerHTML = `$${totalCost.toFixed(2).replace(loan.regex, ",")}`;
+
+    loan.payments.innerHTML = `$${loan.totalMonthly.toFixed(2).replace(loan.regex, ",")}`;
+    loan.results.innerHTML = loan.templateRows;
 }
