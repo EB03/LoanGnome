@@ -55,14 +55,15 @@
                     <form action="">
                             <div class="col-12 mt-5">
                                 <label for="loanAmount">Loan Amount</label>
-                                <input type="text" id="loanAmount" class="form-control">
+                                <input type="text" id="loanAmount" class="form-control"  onkeypress="return /[0-9]/g.test(event.key)">
                             </div>
                             <div class="col-12 mt-2">
                                 <label for="term">Term (Months)</label>
-                                <input type="text" id="term" class="form-control">                            </div>
+                                <input type="text" id="term" class="form-control"  onkeypress="return /[0-9]/g.test(event.key)">                            
+                            </div>
                             <div class="col-12 mt-2">
                                 <label for="interestRate">Interest Rate</label>
-                                <input type="text" id="interestRate" class="form-control">
+                                <input type="text" id="interestRate" class="form-control"  onkeypress="return /[0-9]/g.test(event.key)">
                             </div>
                             <div class="col-12 d-flex justify-content-end mt-5 mb-5">
                                 <button type="button" id="calcButton" class="btn btn-lg btn-dark">Calculate</button>
