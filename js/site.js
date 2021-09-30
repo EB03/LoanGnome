@@ -20,6 +20,7 @@ function calcMonthlyPayments(loan) {
     let interest;
     let totalInterest = 0;
     let balance = loan.loanAmount;
+    //Only allow numeric values
     loan.regex = /\B(?=(\d{3})+(?!\d))/g;
 
     loan.templateRows = "";

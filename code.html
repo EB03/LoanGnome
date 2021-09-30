@@ -38,7 +38,7 @@
                         <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">Git Repo</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/ericbruce-dev/LoanGnome">Git Repo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="https://ericbruce-portfolio.netlify.app">About</a>
@@ -55,17 +55,65 @@
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            // Call Hello World
-                            function HelloWorld() {
-                                alert("Hello World");
+                            
+                            function getUserInput() {
+                                let loan = {}
+                                loan.loanAmount = document.getElementById("loanAmount").value;
+                                loan.term = document.getElementById("term").value;
+                                loan.interestRate = document.getElementById("interestRate").value;
+                                loan.results = document.getElementById("results");
+                                loan.payments = document.getElementById("monthlyPayments");
+                                loan.totalPrincipal = document.getElementById("totalPrincipal");
+                                loan.totalInterest = document.getElementById("totalInterest");
+                                loan.totalCost = document.getElementById("totalCost");
+
+                                calcMonthlyPayments(loan);
+                                displayPayments(loan);
+                            }
+
+                            function calcMonthlyPayments(loan) {
+                                let month = 0;
+                                let principal;
+                                let interest;
+                                let totalInterest = 0;
+                                let balance = loan.loanAmount;
+                                //Only allow numeric values
+                                loan.regex = /\B(?=(\d{3})+(?!\d))/g;
+
+                                loan.templateRows = "";
+
+                                loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-60));
+
+                                for (let i = 0; i < loan.term; i++) {
+                                    month++;
+                                    interest = balance * loan.interestRate/1200;
+                                    principal = loan.totalMonthly - interest;
+                                    totalInterest = totalInterest + interest;
+                                    balance = balance - principal;
+                                    
+                                    if (balance < 0.00) {
+                                        balance = 0.00;
+                                    }
+                                    loan.templateRows += `<tr><td>${month}</td><td>$${loan.totalMonthly.toFixed(2).replace(loan.regex, ",")}</td><td>$${principal.toFixed(2).replace(loan.regex, ",")}</td><td>$${interest.toFixed(2).replace(loan.regex, ",")}</td><td>$${totalInterest.toFixed(2).replace(loan.regex, ",")}</td><td>$${balance.toFixed(2).replace(loan.regex, ",")}</td></tr>`;
+                                }
+                                loan.principal = principal;
+                                loan.allInterest = totalInterest;
+                                return loan;
+                            }
+
+                            function displayPayments(loan) {
+                                loan.loanAmount = parseFloat(loan.loanAmount);
+
+                                loan.totalPrincipal.innerHTML = `$${loan.loanAmount.toFixed(2).replace(loan.regex, ",")}`;
+                                loan.totalInterest.innerHTML = `$${loan.allInterest.toFixed(2).replace(loan.regex, ",")}`;
+                                let totalCost = loan.loanAmount + loan.allInterest;
+                                loan.totalCost.innerHTML = `$${totalCost.toFixed(2).replace(loan.regex, ",")}`;
+
+                                loan.payments.innerHTML = `$${loan.totalMonthly.toFixed(2).replace(loan.regex, ",")}`;
+                                loan.results.innerHTML = loan.templateRows;
                             }
                         </code>
                     </pre>
-                </div>
-                <div class="col-lg-4">
-                    <p>The Code is structured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is function that displays an alert with a message of "Hello World"</p>
                 </div>
             </div>
         </div>
