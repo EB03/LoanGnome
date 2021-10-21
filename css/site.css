@@ -13,6 +13,10 @@
     font-weight: bold;
 }
 
+.filter-logo{
+    filter: invert(48%) sepia(1%) saturate(2476%) hue-rotate(86deg) brightness(150%) contrast(119%);
+}
+
 body {
     color: var(--dark-color);
 }
