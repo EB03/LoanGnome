@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>    
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/prism.css">    
-    <link rel="icon" href="/img/favicon-32x32.png" type="image/png">
+    <link rel="icon" href="/img/favicon-32x32.svg" type="image/png">
    <!-- Convert this to an external style sheet -->
 </head>
 
@@ -21,7 +21,7 @@
     <!-- ===== Nav Section ===== -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="/img/Eric Bruce_minilogo.svg" width="30" height="24" class="d-inline-block align-text-top">Loan Gnome</a>
+            <a class="navbar-brand" href="#"><img src="/img/Eric Bruce_minilogo.svg" width="30" height="24" class="d-inline-block align-text-top filter-logo me-2">Loan Gnome</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            
+                                
                             function getUserInput() {
                                 let loan = {}
                                 loan.loanAmount = document.getElementById("loanAmount").value;
@@ -77,12 +77,13 @@
                                 let interest;
                                 let totalInterest = 0;
                                 let balance = loan.loanAmount;
+                                let monthlyPayments = parseInt(loan.payments);
                                 //Only allow numeric values
                                 loan.regex = /\B(?=(\d{3})+(?!\d))/g;
 
                                 loan.templateRows = "";
 
-                                loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-60));
+                                loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-loan.term));
 
                                 for (let i = 0; i < loan.term; i++) {
                                     month++;
@@ -128,7 +129,7 @@
                     </div>
                 </div>
                 <div class="col d-flex justify-content-lg-end justify-content-lg-center">
-                    <img src="/img/Eric Bruce_Logo.svg" alt="Eric Bruce Logo" height="25">
+                    <img class="filter-logo" src="/img/Eric Bruce_Logo.svg" alt="Eric Bruce Logo" height="25">
                 </div>
                 <div class="col d-flex  justify-content-lg-end">
                     <div class="row">

@@ -20,12 +20,13 @@ function calcMonthlyPayments(loan) {
     let interest;
     let totalInterest = 0;
     let balance = loan.loanAmount;
+    let monthlyPayments = parseInt(loan.payments);
     //Only allow numeric values
     loan.regex = /\B(?=(\d{3})+(?!\d))/g;
 
     loan.templateRows = "";
 
-    loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-60));
+    loan.totalMonthly = (loan.loanAmount) * (loan.interestRate/1200) / (1 - (1 + loan.interestRate/1200)**(-loan.term));
 
     for (let i = 0; i < loan.term; i++) {
         month++;

@@ -12,7 +12,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>    
     <link rel="stylesheet" href="/css/site.css">    
-    <link rel="icon" href="/img/favicon-32x32.png" type="image/png">
+    <link rel="icon" href="/img/favicon-32x32.svg" type="image/png">
    <!-- Convert this to an external style sheet -->
 </head>
 
@@ -20,7 +20,7 @@
     <!-- ===== Nav Section ===== -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="/img/Eric Bruce_minilogo.svg" width="30" height="24" class="d-inline-block align-text-top">Loan Gnome</a>
+            <a class="navbar-brand" href="#"><img src="/img/Eric Bruce_minilogo.svg" width="30" height="24" class="d-inline-block align-text-top filter-logo me-2">Loan Gnome</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-12 mt-2">
                                 <label for="interestRate">Interest Rate</label>
-                                <input type="text" id="interestRate" class="form-control"  onkeypress="return /[0-9]/g.test(event.key)">
+                                <input type="number" id="interestRate" min="0" max="10" class="form-control" step="0.1" onkeypress="return /[0-9.]/g.test(event.key)">
                             </div>
                             <div class="col-12 d-flex justify-content-end mt-5 mb-5">
                                 <button type="button" id="calcButton" class="btn btn-md btn-dark">Calculate</button>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div class="col d-flex justify-content-lg-end justify-content-lg-center">
-                    <img src="/img/Eric Bruce_Logo.svg" alt="Eric Bruce Logo" height="25">
+                    <img class="filter-logo" src="/img/Eric Bruce_Logo.svg" alt="Eric Bruce Logo" height="25">
                 </div>
                 <div class="col d-flex  justify-content-lg-end">
                     <div class="row">
